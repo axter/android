@@ -30,10 +30,11 @@ import com.imohoo.libs.camera.CameraContainer.TakePictureListener;
  * @Description: 和相机绑定的SurfaceView 封装了拍照方法
  * @author LinJ
  * @date 2014-12-31 上午9:44:56
- * 
+ * @modify
  */
+@SuppressWarnings("deprecation")
 public class CameraView extends SurfaceView implements CameraOperation {
-	public final static String TAG = "Item_CameraView";
+	public final static String TAG = "CameraView";
 	/** 和该View绑定的Camera对象 */
 	private Camera mCamera;
 
@@ -108,29 +109,28 @@ public class CameraView extends SurfaceView implements CameraOperation {
 	@SuppressLint("NewApi")
 	protected void onFocus(Point point, AutoFocusCallback callback) {
 		if (mCamera != null) {
-			Camera.Parameters parameters = mCamera.getParameters();
-			// 不支持设置自定义聚焦，则使用自动聚焦，返回
-			if (parameters.getMaxNumFocusAreas() <= 0) {
-				mCamera.autoFocus(callback);
-				return;
-			}
-			List<Area> areas = new ArrayList<Camera.Area>();
-			int left = point.x - 300;
-			int top = point.y - 300;
-			int right = point.x + 300;
-			int bottom = point.y + 300;
-			left = left < -1000 ? -1000 : left;
-			top = top < -1000 ? -1000 : top;
-			right = right > 1000 ? 1000 : right;
-			bottom = bottom > 1000 ? 1000 : bottom;
-			areas.add(new Area(new Rect(left, top, right, bottom), 100));
-			parameters.setFocusAreas(areas);
 			try {
+				Camera.Parameters parameters = mCamera.getParameters();
+				// 不支持设置自定义聚焦，则使用自动聚焦，返回
+				if (parameters.getMaxNumFocusAreas() <= 0) {
+					mCamera.autoFocus(callback);
+					return;
+				}
+				List<Area> areas = new ArrayList<Camera.Area>();
+				int left = point.x - 300;
+				int top = point.y - 300;
+				int right = point.x + 300;
+				int bottom = point.y + 300;
+				left = left < -1000 ? -1000 : left;
+				top = top < -1000 ? -1000 : top;
+				right = right > 1000 ? 1000 : right;
+				bottom = bottom > 1000 ? 1000 : bottom;
+				areas.add(new Area(new Rect(left, top, right, bottom), 100));
+				parameters.setFocusAreas(areas);
 				// 本人使用的小米手机在设置聚焦区域的时候经常会出异常，看日志发现是框架层的字符串转int的时候出错了，
 				// 目测是小米修改了框架层代码导致，在此try掉，对实际聚焦效果没影响
 				mCamera.setParameters(parameters);
 			} catch (Exception e) {
-				// TODO: handle exception
 				e.printStackTrace();
 			}
 			mCamera.autoFocus(callback);
