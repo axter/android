@@ -1,5 +1,6 @@
 package com.imohoo.libs.camera;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -7,6 +8,7 @@ import java.io.IOException;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Point;
@@ -109,6 +111,9 @@ public class CameraContainer extends RelativeLayout implements CameraOperation {
 		mCameraView.takePicture(callback, listener);
 	}
 
+	/**
+	 * 拍照完成的数据监听
+	 */
 	private final PictureCallback pictureCallback = new PictureCallback() {
 		@Override
 		public void onPictureTaken(byte[] data, Camera camera) {
@@ -117,7 +122,7 @@ public class CameraContainer extends RelativeLayout implements CameraOperation {
 			if (mDataHandler == null)
 				mDataHandler = new DataHandler();
 			mDataHandler.setMaxSize(100);
-			File file = mDataHandler.save(data);
+			File file = mDataHandler.save1(data);
 			// 重新打开预览图，进行下一次的拍照准备
 			// camera.startPreview();
 			if (mListener != null)
@@ -134,6 +139,7 @@ public class CameraContainer extends RelativeLayout implements CameraOperation {
 	private final class DataHandler {
 		/** 压缩后的图片最大值 单位KB */
 		private int maxSize = 100;
+
 		public DataHandler() {
 			File folder = new File(mSavePath).getParentFile();
 			if (!folder.exists()) {
@@ -153,49 +159,80 @@ public class CameraContainer extends RelativeLayout implements CameraOperation {
 			return bitmap;
 		}
 
-		/**
-		 * 保存图片
-		 * 
-		 * @param 相机返回的文件流
-		 * @return 解析流生成的缩略图
-		 */
-		public File save(byte[] data) {
+		public File save1(byte[] data) {
 			try {
 				File file = new File(mSavePath);
 				FileOutputStream fos = new FileOutputStream(file);
 				fos.write(data);
 				fos.flush();
 				fos.close();
-				
-//				BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));  
-//				Bitmap fileBm = BitmapFactory.decodeByteArray(data, 0, data.length);
-//				fileBm.compress(CompressFormat.JPEG, 100, bos);
-//		        bos.flush();
-//		        bos.close();
-		        
+
 				ExifInterface exifInterface = new ExifInterface(mSavePath);
 				int orientation = mCameraView.getOrientation();
-				switch(orientation+90) {
-	                case 90:
-	                    exifInterface.setAttribute(ExifInterface.TAG_ORIENTATION,""+ExifInterface.ORIENTATION_ROTATE_90);
-	                    break;
-	                case 180:
-	                    exifInterface.setAttribute(ExifInterface.TAG_ORIENTATION,""+ExifInterface.ORIENTATION_ROTATE_180);
-	                    break;
-	                case 270:
-	                    exifInterface.setAttribute(ExifInterface.TAG_ORIENTATION,""+ExifInterface.ORIENTATION_ROTATE_270);
-	                    break;
-	                default:
-	                    exifInterface.setAttribute(ExifInterface.TAG_ORIENTATION,""+ExifInterface.ORIENTATION_NORMAL);
-	                    break;
+				switch (orientation + 90) {
+					case 90:
+						exifInterface.setAttribute(ExifInterface.TAG_ORIENTATION, "" + ExifInterface.ORIENTATION_ROTATE_90);
+						break;
+					case 180:
+						exifInterface.setAttribute(ExifInterface.TAG_ORIENTATION, "" + ExifInterface.ORIENTATION_ROTATE_180);
+						break;
+					case 270:
+						exifInterface.setAttribute(ExifInterface.TAG_ORIENTATION, "" + ExifInterface.ORIENTATION_ROTATE_270);
+						break;
+					default:
+						exifInterface.setAttribute(ExifInterface.TAG_ORIENTATION, "" + ExifInterface.ORIENTATION_NORMAL);
+						break;
 				}
 				exifInterface.saveAttributes();
 				return file;
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			
-			if (data == null) {
+			return null;
+		}
+
+		public File save2(byte[] data) {
+			try {
+				File file = new File(mSavePath);
+
+				BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+				Bitmap fileBm = BitmapFactory.decodeByteArray(data, 0, data.length);
+				fileBm.compress(CompressFormat.JPEG, 100, bos);
+				bos.flush();
+				bos.close();
+
+				ExifInterface exifInterface = new ExifInterface(mSavePath);
+				int orientation = mCameraView.getOrientation();
+				switch (orientation + 90) {
+					case 90:
+						exifInterface.setAttribute(ExifInterface.TAG_ORIENTATION, "" + ExifInterface.ORIENTATION_ROTATE_90);
+						break;
+					case 180:
+						exifInterface.setAttribute(ExifInterface.TAG_ORIENTATION, "" + ExifInterface.ORIENTATION_ROTATE_180);
+						break;
+					case 270:
+						exifInterface.setAttribute(ExifInterface.TAG_ORIENTATION, "" + ExifInterface.ORIENTATION_ROTATE_270);
+						break;
+					default:
+						exifInterface.setAttribute(ExifInterface.TAG_ORIENTATION, "" + ExifInterface.ORIENTATION_NORMAL);
+						break;
+				}
+				exifInterface.saveAttributes();
+				return file;
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			return null;
+		}
+
+		/**
+		 * 保存图片
+		 * 
+		 * @param 相机返回的文件流
+		 * @return 解析流生成的缩略图
+		 */
+		public File save3(byte[] data) {
+			if (data != null) {
 				// 解析生成相机返回的图片
 				Bitmap fileBm = BitmapFactory.decodeByteArray(data, 0, data.length);
 				if (!mCameraView.isUseFrontCamera()) {
@@ -264,10 +301,10 @@ public class CameraContainer extends RelativeLayout implements CameraOperation {
 					fos.flush();
 					fos.close();
 					// 存图片小图
-//					BufferedOutputStream bufferos = new BufferedOutputStream(new FileOutputStream(thumFile));
-//					thumbnail.compress(Bitmap.CompressFormat.JPEG, 50, bufferos);
-//					bufferos.flush();
-//					bufferos.close();
+					// BufferedOutputStream bufferos = new BufferedOutputStream(new FileOutputStream(thumFile));
+					// thumbnail.compress(Bitmap.CompressFormat.JPEG, 50, bufferos);
+					// bufferos.flush();
+					// bufferos.close();
 					return file;
 				} catch (Exception e) {
 					Log.e(TAG, e.toString());
@@ -417,7 +454,12 @@ public class CameraContainer extends RelativeLayout implements CameraOperation {
 
 	}
 
-	public void close() {
-		mCameraView.close();
+	public void onResume() {
+		mCameraView.onResume();
+		
+	}
+
+	public void onPause() {
+		mCameraView.onPause();
 	}
 }

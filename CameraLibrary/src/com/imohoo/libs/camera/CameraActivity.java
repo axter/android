@@ -30,7 +30,10 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 
 	/** 是否已经拍照了 */
 	private boolean isShoted = false;
-
+	/**最大屏幕边*/
+	private int max;
+	private Bitmap bitmap_old;
+	private Bitmap bitmap_new;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,8 +41,12 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		setContentView(R.layout.layout_item_camera);
+		setContentView(R.layout.camera_activity);
 
+		int w = getResources().getDisplayMetrics().widthPixels;
+		int h = getResources().getDisplayMetrics().heightPixels;
+		max = w>h?w:h;
+		
 		container = (CameraContainer) findViewById(R.id.container);
 		btn_switch_camera = (ImageView) findViewById(R.id.btn_switch_camera);
 		btn_shutter_camera = (ImageButton) findViewById(R.id.btn_shutter_camera);
@@ -97,6 +104,7 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 		} else if (id == R.id.btn_cancel) {
 			if (isShoted) {
 				iv_show.setImageBitmap(null);
+				iv_show.setBackgroundResource(android.R.color.transparent);
 				iv_show.setVisibility(View.GONE);
 				btn_shutter_camera.setBackgroundResource(R.drawable.camera_fun_takephoto);
 				isShoted = false;
@@ -112,6 +120,7 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 			if (isShoted) {
 				iv_show.setImageBitmap(null);
 				iv_show.setVisibility(View.GONE);
+				iv_show.setBackgroundResource(android.R.color.transparent);
 				btn_shutter_camera.setBackgroundResource(R.drawable.camera_fun_takephoto);
 				isShoted = false;
 				return false;
@@ -123,7 +132,7 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		container.close();
+		recycle(bitmap_new);
 	}
 
 	@Override
@@ -134,9 +143,24 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 		btn_shutter_camera.setBackgroundResource(R.drawable.camera_fun_ok);
 
 		iv_show.setVisibility(View.VISIBLE);
+		iv_show.setBackgroundResource(android.R.color.black);
+		bitmap_old = BitmapTool.decodeBitmap(max, file.getAbsolutePath());
+		bitmap_new = BitmapTool.rotateScaleBitmap(BitmapTool.readPictureDegree(file.getAbsolutePath()), 0, bitmap_old);
+		recycle(bitmap_old);
+		iv_show.setImageBitmap(bitmap_new);
+	}
 
-		Bitmap bitmap = BitmapTool.decodeBitmap(0, file.getAbsolutePath());
-		iv_show.setImageBitmap(bitmap);
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		container.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		container.onPause();
 	}
 
 	@Override
@@ -145,4 +169,10 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 
 	}
 
+	private void recycle(Bitmap bitmap){
+		if(bitmap!=null && !bitmap.isRecycled()){
+			bitmap.recycle();
+			bitmap = null;
+		}
+	}
 }
