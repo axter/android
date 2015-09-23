@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="photo_preview">预览</string>
+    <!-- ImgFileListActivity.java -->
+    <string name="photo_select_gallery">选择相册</string>
+    <string name="photo_cancel">取消</string>
+    <!--  -->
+    <string name="photo_piece">张</string>
+    <string name="photo_select_photo">选择图片</string>
+    <string name="photo_finish">完成</string>
+    <!-- ImgsActivity.java -->
+    <string name="photo_select_imgs_text">已选%1$d张，最多选择%2$d张</string>
+    <string name="photo_imgs_overtop">图片超过限额</string>
+
+</resources>

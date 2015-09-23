@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/photo_layout_bg"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:background="@color/photo_layout_title" >
+
+        <TextView
+            android:id="@+id/photo_count"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center_horizontal"
+            android:textColor="@color/photo_layout_txt"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/photo_select_photo"
+            android:textColor="@color/photo_layout_txt"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/photo_back"
+            style="@style/photo_btn_style"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="8dp"
+            android:text="@string/photo_select_gallery" />
+
+        <Button
+            android:id="@+id/photo_send"
+            style="@style/photo_btn_style"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            android:text="@string/photo_finish" />
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/photo_gridview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:listSelector="@null"
+        android:numColumns="3" >
+    </GridView>
+
+</LinearLayout>

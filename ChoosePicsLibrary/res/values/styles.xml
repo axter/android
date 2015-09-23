@@ -1,0 +1,18 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 自定义选择框 -->
+    <style name="photo_checkbox_theme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/photo_checkbox</item>
+    </style>
+
+    <style name="photo_btn_style">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/photo_layout_txt</item>
+        <item name="android:background">@color/photo_layout_btn</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+
+</resources>

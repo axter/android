@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="photo_layout_bg">#EFEFEF</color>
+    <color name="photo_layout_title">#1F252A</color>
+    <color name="photo_layout_btn">#313539</color>
+    <color name="photo_layout_txt">#999999</color>
+</resources>
