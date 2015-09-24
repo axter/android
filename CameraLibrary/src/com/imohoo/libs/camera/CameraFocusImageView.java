@@ -39,13 +39,13 @@ public class CameraFocusImageView extends ImageView {
 
 	public CameraFocusImageView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		mAnimation=AnimationUtils.loadAnimation(getContext(), R.anim.camera_focus_show);
+		mAnimation=AnimationUtils.loadAnimation(context, R.anim.camera_focus_show);
 		mHandler=new Handler();
 
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CameraFocus);
-		mFocusImg = a.getResourceId(R.styleable.CameraFocus_focus_focusing_id, NO_ID);
-		mFocusSucceedImg=a.getResourceId(R.styleable.CameraFocus_focus_success_id, NO_ID);
-		mFocusFailedImg=a.getResourceId(R.styleable.CameraFocus_focus_fail_id, NO_ID);
+		mFocusImg = a.getResourceId(R.styleable.CameraFocus_camerafocus_focusing_id, NO_ID);
+		mFocusSucceedImg=a.getResourceId(R.styleable.CameraFocus_camerafocus_success_id, NO_ID);
+		mFocusFailedImg=a.getResourceId(R.styleable.CameraFocus_camerafocus_fail_id, NO_ID);
 		a.recycle();
 
 		//�۽�ͼƬ����Ϊ��

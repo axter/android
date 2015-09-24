@@ -4,6 +4,7 @@ import java.io.File;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.net.Uri;
@@ -13,27 +14,31 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageButton;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import com.imohoo.libs.R;
 import com.imohoo.libs.camera.CameraContainer.TakePictureListener;
+import com.imohoo.libs.camera.CameraView.MyOrientationEventListener;
+import com.imohoo.libs.rotate.RotateImageView;
 import com.imohoo.libs.utils.BitmapTool;
 
-public class CameraActivity extends Activity implements View.OnClickListener, TakePictureListener {
+public class CameraActivity extends Activity implements View.OnClickListener, TakePictureListener, MyOrientationEventListener {
 	/** 相片体 */
 	private CameraContainer container;
-	private ImageButton btn_shutter_camera;
-	private ImageView btn_switch_camera;
-	private ImageView btn_cancel;
-	private ImageView iv_show;
+	private RotateImageView btn_shutter_camera;
+	private RotateImageView btn_switch_camera;
+	private RotateImageView btn_cancel;
+	private RotateImageView iv_show;
 
 	/** 是否已经拍照了 */
 	private boolean isShoted = false;
-	/**最大屏幕边*/
+	/** 最大屏幕边 */
 	private int max;
 	private Bitmap bitmap_old;
 	private Bitmap bitmap_new;
+	private RotateAnimation operatingAnim;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,13 +50,14 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 
 		int w = getResources().getDisplayMetrics().widthPixels;
 		int h = getResources().getDisplayMetrics().heightPixels;
-		max = w>h?w:h;
-		
+		max = w > h ? w : h;
+
 		container = (CameraContainer) findViewById(R.id.container);
-		btn_switch_camera = (ImageView) findViewById(R.id.btn_switch_camera);
-		btn_shutter_camera = (ImageButton) findViewById(R.id.btn_shutter_camera);
-		btn_cancel = (ImageView) findViewById(R.id.btn_cancel);
-		iv_show = (ImageView) findViewById(R.id.iv_show);
+		container.setOrientationChangeListener(this);
+		btn_switch_camera = (RotateImageView) findViewById(R.id.btn_switch_camera);
+		btn_shutter_camera = (RotateImageView) findViewById(R.id.btn_shutter_camera);
+		btn_cancel = (RotateImageView) findViewById(R.id.btn_cancel);
+		iv_show = (RotateImageView) findViewById(R.id.iv_show);
 
 		btn_shutter_camera.setOnClickListener(this);
 		btn_switch_camera.setOnClickListener(this);
@@ -103,10 +109,9 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 			}
 		} else if (id == R.id.btn_cancel) {
 			if (isShoted) {
-				iv_show.setImageBitmap(null);
-				iv_show.setBackgroundResource(android.R.color.transparent);
+				container.startPreview();
 				iv_show.setVisibility(View.GONE);
-				btn_shutter_camera.setBackgroundResource(R.drawable.camera_fun_takephoto);
+				setRid(btn_shutter_camera, R.drawable.camera_fun_takephoto);
 				isShoted = false;
 				return;
 			}
@@ -118,10 +123,9 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			if (isShoted) {
-				iv_show.setImageBitmap(null);
+				container.startPreview();
 				iv_show.setVisibility(View.GONE);
-				iv_show.setBackgroundResource(android.R.color.transparent);
-				btn_shutter_camera.setBackgroundResource(R.drawable.camera_fun_takephoto);
+				setRid(btn_shutter_camera, R.drawable.camera_fun_takephoto);
 				isShoted = false;
 				return false;
 			}
@@ -135,22 +139,26 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 		recycle(bitmap_new);
 	}
 
+	private int savedRotate = 0;
+
 	@Override
 	public void onTakePictureEnd(File file, Camera camera) {
+		container.stopPreview();
 		isShoted = true;
-
 		btn_shutter_camera.setClickable(true);
-		btn_shutter_camera.setBackgroundResource(R.drawable.camera_fun_ok);
+		setRid(btn_shutter_camera, R.drawable.camera_fun_ok);
 
-		iv_show.setVisibility(View.VISIBLE);
-		iv_show.setBackgroundResource(android.R.color.black);
 		bitmap_old = BitmapTool.decodeBitmap(max, file.getAbsolutePath());
-		bitmap_new = BitmapTool.rotateScaleBitmap(BitmapTool.readPictureDegree(file.getAbsolutePath()), 0, bitmap_old);
-		recycle(bitmap_old);
-		iv_show.setImageBitmap(bitmap_new);
+		// bitmap_new = BitmapTool.rotateScaleBitmap(90, 0, bitmap_old);
+		// if (bitmap_old != bitmap_new) {
+		// recycle(bitmap_old);
+		// }
+		savedRotate = BitmapTool.readPictureDegree(file.getAbsolutePath());
+		iv_show.setImageBitmap(bitmap_old);
+		iv_show.setOrientation(mRotation + (360 - savedRotate) % 360, false);
+		iv_show.setVisibility(View.VISIBLE);
 	}
 
-	
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -169,10 +177,30 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 
 	}
 
-	private void recycle(Bitmap bitmap){
-		if(bitmap!=null && !bitmap.isRecycled()){
+	private void recycle(Bitmap bitmap) {
+		if (bitmap != null && !bitmap.isRecycled()) {
 			bitmap.recycle();
 			bitmap = null;
+		}
+	}
+
+	private int mRotation = 0;
+
+	@Override
+	public void orientationChangeListener(int rotation) {
+		if (iv_show.getVisibility() == View.VISIBLE) {
+			iv_show.setOrientation(rotation + (360 - savedRotate) % 360, true);
+		}
+		btn_switch_camera.setOrientation(rotation, true);
+		btn_shutter_camera.setOrientation(rotation, true);
+		btn_cancel.setOrientation(rotation, true);
+		mRotation = rotation;
+	}
+
+	private void setRid(ImageView iv, int rid) {
+		Drawable d = getResources().getDrawable(rid);
+		if (d != null) {
+			iv.setImageDrawable(d);
 		}
 	}
 }

@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
@@ -25,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.imohoo.libs.R;
+import com.imohoo.libs.camera.CameraView.MyOrientationEventListener;
 
 /**
  * @ClassName: Item_CameraContainer
@@ -166,10 +168,10 @@ public class CameraContainer extends RelativeLayout implements CameraOperation {
 				fos.write(data);
 				fos.flush();
 				fos.close();
-
+				int orientation = 0;
+				orientation = mCameraView.getOrientation() + 90;
 				ExifInterface exifInterface = new ExifInterface(mSavePath);
-				int orientation = mCameraView.getOrientation();
-				switch (orientation + 90) {
+				switch (orientation) {
 					case 90:
 						exifInterface.setAttribute(ExifInterface.TAG_ORIENTATION, "" + ExifInterface.ORIENTATION_ROTATE_90);
 						break;
@@ -459,7 +461,45 @@ public class CameraContainer extends RelativeLayout implements CameraOperation {
 		
 	}
 
+	public int getOrientation(byte[] data) {
+		BitmapFactory.Options newOpts = new BitmapFactory.Options();
+		// 开始读入图片，此时把options.inJustDecodeBounds 设回true了
+		newOpts.inJustDecodeBounds = true;
+		BitmapFactory.decodeByteArray(data,0,data.length, newOpts);
+
+		// 缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
+		final int height = newOpts.outHeight;
+		final int width = newOpts.outWidth;
+		
+		if (!mCameraView.isUseFrontCamera()) {
+			// 后置摄像头
+			if ((getResources().getConfiguration().orientation==Configuration.ORIENTATION_PORTRAIT) && (width>height)) {
+				// 横屏 宽大
+				return 90;
+			}
+		} else {
+			// 前置摄像头
+			if ((getResources().getConfiguration().orientation==Configuration.ORIENTATION_PORTRAIT) && (width>height)) {
+				// 横屏 宽大
+				return 90;
+			}
+		}
+		return 0;
+	}
+
 	public void onPause() {
 		mCameraView.onPause();
+	}
+	
+	public void startPreview(){
+		mCameraView.startPreview();
+	}
+	
+	public void stopPreview(){
+		mCameraView.stopPreview();
+	}
+
+	public void setOrientationChangeListener(MyOrientationEventListener orilis) {
+		mCameraView.setOrientationChangeListener(orilis);
 	}
 }

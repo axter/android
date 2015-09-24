@@ -13,8 +13,8 @@
         android:id="@+id/focusImageView"
         android:layout_width="75dip"
         android:layout_height="75dip"
-        camera:focus_fail_id="@drawable/camera_focus_failed"
-        camera:focus_focusing_id="@drawable/camera_focusing"
-        camera:focus_success_id="@drawable/camera_focused" />
+        camera:camerafocus_focusing_id="@drawable/camera_focusing"
+        camera:camerafocus_success_id="@drawable/camera_focused"
+        camera:camerafocus_fail_id="@drawable/camera_focus_failed" />
 
 </RelativeLayout>

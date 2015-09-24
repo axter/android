@@ -10,11 +10,13 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/layout_takephoto" />
 
-    <ImageView
+    <com.imohoo.libs.rotate.RotateImageView
         android:id="@+id/iv_show"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerInside"
+        android:visibility="gone"
+        android:background="@android:color/black"
         android:layout_above="@+id/layout_takephoto" />
 
     <RelativeLayout
@@ -29,14 +31,14 @@
         android:background="#000000"
         android:visibility="visible" >
 
-        <ImageButton
+        <com.imohoo.libs.rotate.RotateImageView
             android:id="@+id/btn_shutter_camera"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_centerInParent="true"
             android:background="@drawable/camera_fun_takephoto" />
 
-        <ImageView
+        <com.imohoo.libs.rotate.RotateImageView
             android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,7 +47,7 @@
             android:padding="10dp"
             android:src="@drawable/camera_fun_cancel" />
 
-        <ImageView
+        <com.imohoo.libs.rotate.RotateImageView
             android:id="@+id/btn_switch_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

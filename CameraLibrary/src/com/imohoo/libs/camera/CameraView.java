@@ -58,10 +58,13 @@ public class CameraView extends SurfaceView implements CameraOperation {
 		getHolder().addCallback(callback);
 	}
 
+	/**有些机器待机SurfaceView会消亡*/
+	private boolean isCreated = false;
 	private SurfaceHolder.Callback callback = new SurfaceHolder.Callback() {
 		@Override
 		public void surfaceCreated(SurfaceHolder holder) {
 			try {
+				isCreated = true;
 				open();
 			} catch (Exception e) {
 				Toast.makeText(getContext(), "打开相机失败", Toast.LENGTH_SHORT).show();
@@ -70,11 +73,12 @@ public class CameraView extends SurfaceView implements CameraOperation {
 
 		@Override
 		public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-			updateCameraOrientation();
+			//updateCameraOrientation();
 		}
 
 		@Override
 		public void surfaceDestroyed(SurfaceHolder holder) {
+			isCreated = false;
 			// 停止录像
 			close();
 		}
@@ -264,7 +268,9 @@ public class CameraView extends SurfaceView implements CameraOperation {
 					if (rotation == mOrientation)
 						return;
 					mOrientation = rotation;
-					updateCameraOrientation();
+					if(orilis!=null)
+						orilis.orientationChangeListener(mOrientation);
+					//updateCameraOrientation();
 				}
 			};
 		}
@@ -325,7 +331,7 @@ public class CameraView extends SurfaceView implements CameraOperation {
 	public void onResume() {
 		// 开启屏幕朝向监听
 		startOrientationChangeListener();
-		if (getWidth() > 0) {
+		if (getWidth() > 0 && isCreated) {
 			open();
 		}
 	}
@@ -340,7 +346,8 @@ public class CameraView extends SurfaceView implements CameraOperation {
 				setCameraParameters();
 				mCamera.setPreviewDisplay(getHolder());
 				mCamera.startPreview();
-				updateCameraOrientation();
+				//updateCameraOrientation();
+				mCamera.setDisplayOrientation(90);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -361,4 +368,25 @@ public class CameraView extends SurfaceView implements CameraOperation {
 			open1();
 		}
 	};
+
+	public void startPreview() {
+		if (mCamera != null) {
+			mCamera.startPreview();
+		}
+	}
+
+	public void stopPreview() {
+		if (mCamera != null) {
+			mCamera.stopPreview();
+		}
+	}
+	
+	private MyOrientationEventListener orilis;
+	public void setOrientationChangeListener(MyOrientationEventListener orilis) {
+		this.orilis = orilis;
+	}
+	
+	public static interface MyOrientationEventListener{
+		public void orientationChangeListener(int rotation);
+	}
 }
