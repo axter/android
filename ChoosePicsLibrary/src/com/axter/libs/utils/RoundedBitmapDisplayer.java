@@ -1,4 +1,4 @@
-package com.imohoo.libs.utils;
+package com.axter.libs.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;

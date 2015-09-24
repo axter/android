@@ -1,6 +1,4 @@
-package com.imohoo.libs.camera;
-
-
+package com.axter.libs.camera;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,7 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.imohoo.libs.R;
+import com.axter.libs.camera.R;
 
 /** 
  * @ClassName: Item_FocusImageView 

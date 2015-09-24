@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.imohoo.test"
+    package="com.axter.libs.choosepics"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <!-- Required  一些系统要求的权限，如访问网络等 -->
-    <uses-permission android:name="com.imohoo.BusinessCMT.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="com.axter.BusinessCMT.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -132,7 +132,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="相册" >
         <activity
-            android:name="com.imohoo.test.view.activity.MainActivity"
+            android:name="com.axter.libs.choosepics.MainActivity"
             android:label="相册" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -141,13 +141,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.imohoo.libs.choosepics.ImgFilesActivity"
+            android:name="com.axter.libs.choosepics.ImgFilesActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
-            android:name="com.imohoo.libs.choosepics.ImgDirsActivity"
+            android:name="com.axter.libs.choosepics.ImgDirsActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="adjustPan" >

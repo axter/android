@@ -1,4 +1,4 @@
-package com.imohoo.libs.choosepics;
+package com.axter.libs.choosepics;
 
 import java.util.Collections;
 import java.util.List;
@@ -13,8 +13,8 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
-import com.imohoo.libs.R;
-import com.imohoo.libs.utils.BitmapCache;
+import com.axter.libs.choosepics.R;
+import com.axter.libs.utils.BitmapCache;
 
 public class ImgFilesAdapter extends BaseAdapter {
 	/** 图片文件绝对路径 */

@@ -1,4 +1,4 @@
-package com.imohoo.libs.choosepics;
+package com.axter.libs.choosepics;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-
-import com.imohoo.libs.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,6 +18,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+
+import com.axter.libs.choosepics.R;
 
 /**
  * <p>显示系统相册</p>

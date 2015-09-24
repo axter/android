@@ -1,4 +1,4 @@
-package com.imohoo.libs.camera;
+package com.axter.libs.camera;
 
 import java.io.File;
 
@@ -17,11 +17,11 @@ import android.view.WindowManager;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
-import com.imohoo.libs.R;
-import com.imohoo.libs.camera.CameraContainer.TakePictureListener;
-import com.imohoo.libs.camera.CameraView.MyOrientationEventListener;
-import com.imohoo.libs.rotate.RotateImageView;
-import com.imohoo.libs.utils.BitmapTool;
+import com.axter.libs.camera.R;
+import com.axter.libs.camera.CameraContainer.TakePictureListener;
+import com.axter.libs.camera.CameraView.MyOrientationEventListener;
+import com.axter.libs.rotate.RotateImageView;
+import com.axter.libs.utils.BitmapTool;
 
 public class CameraActivity extends Activity implements View.OnClickListener, TakePictureListener, MyOrientationEventListener {
 	/** 相片体 */

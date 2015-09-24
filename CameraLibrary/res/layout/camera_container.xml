@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <com.imohoo.libs.camera.CameraView
+    <com.axter.libs.camera.CameraView
         android:id="@+id/cameraView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.imohoo.libs.camera.CameraFocusImageView
+    <com.axter.libs.camera.CameraFocusImageView
         android:id="@+id/focusImageView"
         android:layout_width="75dip"
         android:layout_height="75dip"

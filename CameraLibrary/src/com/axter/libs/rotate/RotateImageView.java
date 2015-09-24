@@ -1,4 +1,4 @@
-package com.imohoo.libs.rotate;
+package com.axter.libs.rotate;
 
 import android.content.Context;
 import android.graphics.Bitmap;

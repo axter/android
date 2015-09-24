@@ -1,4 +1,4 @@
-package com.imohoo.libs.choosepics;
+package com.axter.libs.choosepics;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +12,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.imohoo.libs.R;
-import com.imohoo.libs.utils.BitmapCache;
+import com.axter.libs.choosepics.R;
+import com.axter.libs.utils.BitmapCache;
 
 public class ImgDirsAdapter extends BaseAdapter {
 	private static final String filecount = "filecount";

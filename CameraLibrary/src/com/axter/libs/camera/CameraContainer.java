@@ -1,4 +1,4 @@
-package com.imohoo.libs.camera;
+package com.axter.libs.camera;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -25,8 +25,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.imohoo.libs.R;
-import com.imohoo.libs.camera.CameraView.MyOrientationEventListener;
+import com.axter.libs.camera.R;
+import com.axter.libs.camera.CameraView.MyOrientationEventListener;
 
 /**
  * @ClassName: Item_CameraContainer

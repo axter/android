@@ -1,4 +1,4 @@
-package com.imohoo.libs.camera;
+package com.axter.libs.camera;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import android.view.SurfaceView;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.imohoo.libs.camera.CameraContainer.TakePictureListener;
+import com.axter.libs.camera.CameraContainer.TakePictureListener;
 
 /**
  * @ClassName: Item_CameraView

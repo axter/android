@@ -1,4 +1,4 @@
-package com.imohoo.libs.choosepics;
+package com.axter.libs.choosepics;
 
 import java.util.ArrayList;
 
@@ -12,8 +12,8 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.imohoo.libs.R;
-import com.imohoo.libs.choosepics.ImgFilesAdapter.OnItemClickClass;
+import com.axter.libs.choosepics.R;
+import com.axter.libs.choosepics.ImgFilesAdapter.OnItemClickClass;
 
 /**
  * <p>选择图片页面 </p>

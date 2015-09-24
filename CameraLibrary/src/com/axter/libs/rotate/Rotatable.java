@@ -1,4 +1,4 @@
-package com.imohoo.libs.rotate;
+package com.axter.libs.rotate;
 
 public interface Rotatable {
     // Set parameter 'animation' to true to have animation when rotation.

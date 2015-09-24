@@ -1,4 +1,4 @@
-package com.imohoo.test.view.activity;
+package com.axter.libs.choosepics;
 
 import java.util.ArrayList;
 
@@ -10,9 +10,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.imohoo.libs.choosepics.ImgDirsActivity;
-import com.imohoo.libs.utils.BitmapCache;
-import com.imohoo.test.R;
+import com.axter.libs.choosepics.R;
+import com.axter.libs.utils.BitmapCache;
 
 public class MainActivity extends Activity {
 

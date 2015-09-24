@@ -1,9 +1,9 @@
-package com.imohoo.libs.camera;
+package com.axter.libs.camera;
 
 
 import android.hardware.Camera.PictureCallback;
 
-import com.imohoo.libs.camera.CameraContainer.TakePictureListener;
+import com.axter.libs.camera.CameraContainer.TakePictureListener;
 
 /** 
  * @ClassName: Item_CameraOperation 
