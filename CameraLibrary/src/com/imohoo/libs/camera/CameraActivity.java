@@ -35,8 +35,7 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 	private boolean isShoted = false;
 	/** 最大屏幕边 */
 	private int max;
-	private Bitmap bitmap_old;
-	private Bitmap bitmap_new;
+	private Bitmap bitmapPreview;
 	private RotateAnimation operatingAnim;
 
 	@Override
@@ -108,11 +107,7 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 				container.switchCamera();
 			}
 		} else if (id == R.id.btn_cancel) {
-			if (isShoted) {
-				container.startPreview();
-				iv_show.setVisibility(View.GONE);
-				setRid(btn_shutter_camera, R.drawable.camera_fun_takephoto);
-				isShoted = false;
+			if(isPreview(false)){
 				return;
 			}
 			finish();
@@ -122,11 +117,7 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (isShoted) {
-				container.startPreview();
-				iv_show.setVisibility(View.GONE);
-				setRid(btn_shutter_camera, R.drawable.camera_fun_takephoto);
-				isShoted = false;
+			if(isPreview(false)){
 				return false;
 			}
 		}
@@ -136,25 +127,45 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		recycle(bitmap_new);
+		recycle(bitmapPreview);
 	}
 
+	/**
+	 * 
+	 * @param flag true 进入预览,false 退出预览
+	 * @return 是否退出预览成功
+	 */
+	private boolean isPreview(boolean flag){
+		if(flag){
+			// 预览图状态
+			isShoted = true;
+			container.stopPreview();
+			btn_shutter_camera.setClickable(true);
+			setRid(btn_shutter_camera, R.drawable.camera_fun_ok);
+			btn_switch_camera.setVisibility(View.GONE);
+		}else{
+			if (isShoted) {
+				isShoted = false;
+				container.startPreview();
+				iv_show.setVisibility(View.GONE);
+				setRid(btn_shutter_camera, R.drawable.camera_fun_takephoto);
+				btn_switch_camera.setVisibility(View.VISIBLE);
+				return true;
+			}
+		}
+		return false;
+	}
+	/**照片旋转角度*/
 	private int savedRotate = 0;
 
 	@Override
 	public void onTakePictureEnd(File file, Camera camera) {
-		container.stopPreview();
-		isShoted = true;
-		btn_shutter_camera.setClickable(true);
-		setRid(btn_shutter_camera, R.drawable.camera_fun_ok);
-
-		bitmap_old = BitmapTool.decodeBitmap(max, file.getAbsolutePath());
-		// bitmap_new = BitmapTool.rotateScaleBitmap(90, 0, bitmap_old);
-		// if (bitmap_old != bitmap_new) {
-		// recycle(bitmap_old);
-		// }
+		isPreview(true);
+		
+		bitmapPreview = BitmapTool.decodeBitmap(max, file.getAbsolutePath());
+		
 		savedRotate = BitmapTool.readPictureDegree(file.getAbsolutePath());
-		iv_show.setImageBitmap(bitmap_old);
+		iv_show.setImageBitmap(bitmapPreview);
 		iv_show.setOrientation(mRotation + (360 - savedRotate) % 360, false);
 		iv_show.setVisibility(View.VISIBLE);
 	}
