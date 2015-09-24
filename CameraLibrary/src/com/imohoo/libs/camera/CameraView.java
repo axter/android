@@ -98,7 +98,7 @@ public class CameraView extends SurfaceView implements CameraOperation {
 	 */
 	@Override
 	public void switchCamera() {
-		if (getWidth() <= 0)
+		if (getWidth() <= 0 && !isCreated)
 			return;
 		mIsFrontCamera = !mIsFrontCamera;
 		open();

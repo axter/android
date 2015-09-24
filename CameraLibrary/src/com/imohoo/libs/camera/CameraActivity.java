@@ -75,7 +75,7 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 			pathBuilder.append("camera");
 			pathBuilder.append(File.separator);
 			pathBuilder.append(System.currentTimeMillis());
-			pathBuilder.append(".png");
+			pathBuilder.append(".jpg");
 			container.setRootPath(pathBuilder.toString());
 		}
 
@@ -103,6 +103,7 @@ public class CameraActivity extends Activity implements View.OnClickListener, Ta
 				finish();
 			}
 		} else if (id == R.id.btn_switch_camera) {
+			// 预览状态不允许切换摄像头
 			if (!isShoted) {
 				container.switchCamera();
 			}
