@@ -26,7 +26,7 @@ import android.widget.Toast;
 import com.axter.libs.camera.CameraContainer.TakePictureListener;
 
 /**
- * @ClassName: Item_CameraView
+ * @ClassName: CameraView
  * @Description: 和相机绑定的SurfaceView 封装了拍照方法
  * @author LinJ
  * @date 2014-12-31 上午9:44:56
