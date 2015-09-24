@@ -1,0 +1,14 @@
+```xml
+<item name="android:windowFrame">@null</item>
+<item name="android:windowNoTitle">true</item>
+<item name="android:windowBackground">@color/mytransparent</item>
+<!--浮在activity上,不然setCanceledOnTouchOutside怎么起作用-->
+<item name="android:windowIsFloating">true</item>
+<!--透明属性-->
+<item name="android:windowIsTranslucent">false</item>
+<item name="android:windowContentOverlay">@null</item>
+
+<item name="android:windowFullscreen">false</item>
+<item name="android:backgroundDimEnabled">true</item>
+<item name="android:backgroundDimAmount">0.6</item>
+```
