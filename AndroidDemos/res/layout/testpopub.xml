@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white" >
+
+    <ImageView
+        android:id="@+id/img_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/group_menu_top" />
+
+    <TextView
+        android:id="@+id/menu_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_point"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="搜索跑团"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <View
+        android:id="@+id/menu_line1"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_below="@+id/menu_search"
+        android:background="#F1F1F1" />
+
+    <TextView
+        android:id="@+id/menu_create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/menu_line1"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="创建跑团"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+</RelativeLayout>

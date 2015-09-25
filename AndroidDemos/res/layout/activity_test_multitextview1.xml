@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.axter.example.multipletextview.MultipleTextView1
+        xmlns:my="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/mtv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        my:textBackground="@color/white"
+        my:textColor="@color/black"
+        my:textLineMargin="20dp"
+        my:textPaddingBottom="20dp"
+        my:textPaddingLeft="20dp"
+        my:textPaddingRight="20dp"
+        my:textPaddingTop="20dp"
+        my:textSize="18sp"
+        my:textWordMargin="5dp" />
+
+</LinearLayout>
