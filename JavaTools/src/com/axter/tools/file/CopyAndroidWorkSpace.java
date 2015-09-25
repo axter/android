@@ -28,9 +28,15 @@ public class CopyAndroidWorkSpace {
 	// 还原对比目录
 	static String url3 = "E:/WorkSpace/libs2";
 	
-	static String source = "axter";
-	static String dest = "imohoo";
+	static String source = "";
+	static String dest = "";
 	public static void main(String[] args) throws IOException {
+		if(args==null || args.length!=2){
+			System.out.println("缺少参数");
+			return;
+		}
+		source = args[0];
+		dest = args[1];
 		copyModify(url1, url2);
 		
 		String temp= source;
