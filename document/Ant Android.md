@@ -95,7 +95,7 @@ key.alias.password=xxx
     <replaceregexp encoding="UTF-8" flags="g" byline="false">  
         <regexp pattern='public static final boolean AILI_TEST = (.*);' />
         <substitution expression='public static final boolean AILI_TEST = true;' /> 
-        <fileset dir="src/com/imohoo/shanpao" includes="AppConfig.java" />
+        <fileset dir="src/com/axter/shanpao" includes="AppConfig.java" />
     </replaceregexp>
     
     <replaceregexp encoding="UTF-8" flags="h" byline="false">
@@ -120,7 +120,7 @@ key.alias.password=xxx
     <replaceregexp encoding="UTF-8" flags="j" byline="false">  
         <regexp pattern='public static final boolean AILI_TEST = (.*);' />
         <substitution expression='public static final boolean AILI_TEST = false;' /> 
-        <fileset dir="src/com/imohoo/shanpao" includes="AppConfig.java" />
+        <fileset dir="src/com/axter/shanpao" includes="AppConfig.java" />
     </replaceregexp>
     
     <replaceregexp encoding="UTF-8" flags="k" byline="false">
@@ -141,15 +141,15 @@ key.alias.password=xxx
 
 <target name="shanpao_bak">
 	<!-- 拷贝,备份文件 -->
-    <copy file="src/com/imohoo/shanpao/AppConfig.java" tofile="bin/AppConfig.java.bak"/>
+    <copy file="src/com/axter/shanpao/AppConfig.java" tofile="bin/AppConfig.java.bak"/>
     <copy file="AndroidManifest.xml" tofile="bin/AndroidManifest.xml.bak"/>
 </target>
 
 <target name="shanpao_recovery">
 	<!-- 先删除才能覆盖 -->
-    <delete file="src/com/imohoo/shanpao/AppConfig.java"/>
+    <delete file="src/com/axter/shanpao/AppConfig.java"/>
     <delete file="AndroidManifest.xml"/>
-    <copy file="bin/AppConfig.java.bak" tofile="src/com/imohoo/shanpao/AppConfig.java"/>
+    <copy file="bin/AppConfig.java.bak" tofile="src/com/axter/shanpao/AppConfig.java"/>
     <copy file="bin/AndroidManifest.xml.bak" tofile="AndroidManifest.xml"/>
 </target>
 ```
