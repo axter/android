@@ -31,11 +31,15 @@ public class CopyAndroidWorkSpace {
 	static String source = "";
 	static String dest = "";
 	public static void main(String[] args) throws IOException {
-		if(args==null || args.length!=2){
+		if(args==null || args.length!=5){
 			System.out.println("缺少参数");
 			return;
 		}
-		System.out.println(args[0]+"|"+args[1]);
+		System.out.println(args[0]+"|"+args[1]+"|"+args[2]+"|"+args[3]+"|"+args[4]);
+		url1 = args[2];
+		url2 = args[3];
+		url3 = args[4];
+		
 		source = args[0];
 		dest = args[1];
 		copyModify(url1, url2);
