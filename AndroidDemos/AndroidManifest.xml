@@ -136,6 +136,14 @@
                 <category android:name="android.axter.example.category.SAMPLE_CODE" />
             </intent-filter>
         </activity>
+        
+        <activity android:name="com.axter.example.db.TestGreenDaoActivity"
+                android:label="测试DBDAO">
+            <intent-filter>
+                <action android:name="android.axter.example.action.MAIN" />
+                <category android:name="android.axter.example.category.SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
