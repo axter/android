@@ -35,6 +35,7 @@ public class CopyAndroidWorkSpace {
 			System.out.println("缺少参数");
 			return;
 		}
+		System.out.println(args[0]+"|"+args[1]);
 		source = args[0];
 		dest = args[1];
 		copyModify(url1, url2);
@@ -116,7 +117,7 @@ public class CopyAndroidWorkSpace {
 		}
 	}
 
-	private static String encoding = null;
+	private static String encoding = "utf-8";
 	private static boolean byline = true;
 
 	public static void doReplace(File f, File temp) throws IOException {
