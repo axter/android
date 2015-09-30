@@ -103,10 +103,11 @@ public class CopyAndroidWorkSpace {
 		if (file1.isFile()) {
 			String name = file1.getName();
 			String last = name.substring(name.lastIndexOf(".") + 1);
-			if ("jar".equals(last) || "png".equals(last) || "class".equals(last)) {
-				fileChannelCopy(file1, file2);
-			} else {
+			// "jar".equals(last) || "png".equals(last) || "class".equals(last) || "TTF".equals(last)  || "jpg".equals(last)
+			if ("java".equals(last) || "xml".equals(last)) {
 				doReplace(file1, file2);
+			} else {
+				fileChannelCopy(file1, file2);
 			}
 		} else if (file1.isDirectory()) {
 			file2.mkdirs();
