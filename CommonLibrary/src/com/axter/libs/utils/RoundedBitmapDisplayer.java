@@ -115,18 +115,16 @@ public class RoundedBitmapDisplayer implements BitmapDisplayer {
 	 */
 	public static Matrix getMatrix(float w,float h,float ww,float hh){
 		Matrix shaderMatrix = new Matrix();
-		
-		if(w>h){
-			float scale = hh/h;
-			shaderMatrix.postScale(scale, scale);
-			shaderMatrix.postTranslate(-(w*scale - ww)/2, 0);
-		}else if(w<h){
-			float scale = ww/w;
-			shaderMatrix.postScale(scale, scale);
-			shaderMatrix.postTranslate(0, -(h*scale - hh)/2);
+		float sw = ww/w;
+		float sh = hh/h;
+		if(sw<sh){
+			shaderMatrix.postScale(sh, sh);
+			shaderMatrix.postTranslate(-(w*sh - ww)/2, 0);
+		}else if(sw>sh){
+			shaderMatrix.postScale(sw, sw);
+			shaderMatrix.postTranslate(0, -(h*sw - hh)/2);
 		}else{
-			float scale = hh/h;
-			shaderMatrix.postScale(scale, scale);
+			shaderMatrix.postScale(sw, sw);
 		}
 		return shaderMatrix;
 	}
