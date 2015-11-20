@@ -1,0 +1,5 @@
+Charge.xml
+ConsumeCodeInfo.xml
+.svn
+build
+.gradle

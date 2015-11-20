@@ -13,6 +13,9 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 拷贝Android库文件,修改package引用地址
@@ -20,7 +23,9 @@ import java.nio.channels.FileChannel;
  *
  */
 public class CopyAndroidWorkSpace {
-
+	// 排除文件列表
+	static List<String> exclude_list;
+	static String exclude_file;
 	// 源文件夹
 	static String url1 = "E:/Git/android";
 	// 目标文件夹
@@ -31,7 +36,7 @@ public class CopyAndroidWorkSpace {
 	static String source = "";
 	static String dest = "";
 	public static void main(String[] args) throws IOException {
-		if(args==null || args.length!=5){
+		if(args==null || args.length<5){
 			System.out.println("缺少参数");
 			return;
 		}
@@ -39,7 +44,10 @@ public class CopyAndroidWorkSpace {
 		url1 = args[2];
 		url2 = args[3];
 		url3 = args[4];
-		
+		if(args.length >= 6){
+			exclude_file = args[5];
+			System.out.println(args[5]);
+		}
 		source = args[0];
 		dest = args[1];
 		copyModify(url1, url2);
@@ -64,9 +72,12 @@ public class CopyAndroidWorkSpace {
 			}
 			File[] files = souDir.listFiles();
 			for (File file : files) {
-				if (file.isDirectory() && !file.getName().startsWith(".")) {
+				if (file.isDirectory()) {
 					// 拷贝文件夹
 					copy(file.getAbsolutePath(), url2);
+				}else{
+					File dst = new File(url2, file.getName());
+					copyFile(file, dst);
 				}
 			}
 		} else {
@@ -104,12 +115,14 @@ public class CopyAndroidWorkSpace {
 			String name = file1.getName();
 			String last = name.substring(name.lastIndexOf(".") + 1);
 			// "jar".equals(last) || "png".equals(last) || "class".equals(last) || "TTF".equals(last)  || "jpg".equals(last)
-			if ("java".equals(last) || "xml".equals(last)) {
+			if (!isHave(name) && ("java".equals(last) || "xml".equals(last) || "gradle".equals(last))) {
 				doReplace(file1, file2);
 			} else {
 				fileChannelCopy(file1, file2);
 			}
 		} else if (file1.isDirectory()) {
+			if (isHave(file1.getName()))
+				return;
 			file2.mkdirs();
 			File[] files = file1.listFiles();
 			for (File f : files) {
@@ -260,5 +273,35 @@ public class CopyAndroidWorkSpace {
 
 		}
 
+	}
+	
+	public static boolean isHave(String exclude){
+		if(exclude_list == null){
+			if(exclude_file == null || exclude_file.length()==0 || !new File(exclude_file).isFile()){
+				return false;
+			}
+			try{
+				exclude_list = new ArrayList<String>();
+				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(exclude_file), Charset.forName("utf-8")));
+				String temp = null;
+				while ((temp = br.readLine()) != null) {
+					if(temp.trim().length()>0){
+						exclude_list.add(temp.trim());
+					}
+				}
+				br.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			if(exclude_list == null){
+				return false;
+			}
+		}
+		if(exclude_list.contains(exclude)){
+			System.out.println(exclude);
+			return true;
+		}else{
+			return false;
+		}
 	}
 }
