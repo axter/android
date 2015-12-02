@@ -27,9 +27,10 @@ import android.media.ExifInterface;
 import android.os.Environment;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+
 /**
  * <p>Bitmap操作类</p>
- * 
+ * <p/>
  * <strong>
  * <p>使用案例参考</p>
  * <li>1、读取图片文件，预先将过于大的图片缩放至可接受范围{@link BitmapTool#decodeBitmap(int, String)}</li>
@@ -37,20 +38,18 @@ import android.util.DisplayMetrics;
  * <li>3、Bitmap储存至本地，100K以内{@link BitmapTool#saveBitmap(Bitmap, String)}</li>
  * <li>4、可以上传了</li>
  * </strong>
- * 
- * @author zhaobo
  *
+ * @author zhaobo
  */
 public class BitmapTool {
-	
+
 	/**
 	 * 图片转成string
-	 * 
+	 *
 	 * @param bitmap
 	 * @return
 	 */
-	public static String convertIconToString(Bitmap bitmap)
-	{
+	public static String convertIconToString(Bitmap bitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();// outputstream
 		bitmap.compress(CompressFormat.PNG, 100, baos);
 		byte[] appicon = baos.toByteArray();// 转为byte数组
@@ -60,15 +59,13 @@ public class BitmapTool {
 
 	/**
 	 * string转成bitmap
-	 * 
+	 *
 	 * @param st
 	 */
-	public static Bitmap convertStringToIcon(String st)
-	{
+	public static Bitmap convertStringToIcon(String st) {
 		// OutputStream out;
 		Bitmap bitmap = null;
-		try
-		{
+		try {
 			// out = new FileOutputStream("/sdcard/aa.jpg");
 			byte[] bitmapArray;
 			bitmapArray = Base64.decode(st, Base64.DEFAULT);
@@ -77,18 +74,15 @@ public class BitmapTool {
 							bitmapArray.length);
 			// bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
 			return bitmap;
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			return null;
 		}
 	}
 
-	
 
 	/**
 	 * bitmap转换为字节数组
-	 * 
+	 *
 	 * @param b
 	 * @return
 	 */
@@ -103,7 +97,7 @@ public class BitmapTool {
 
 	/**
 	 * 字节数组转换为bitmap
-	 * 
+	 *
 	 * @param b
 	 * @return
 	 */
@@ -113,7 +107,7 @@ public class BitmapTool {
 
 	/**
 	 * bitmap转换为drawable
-	 * 
+	 *
 	 * @param b
 	 * @return
 	 */
@@ -123,7 +117,7 @@ public class BitmapTool {
 
 	/**
 	 * drawable转换为bitmap
-	 * 
+	 *
 	 * @param d
 	 * @return
 	 */
@@ -133,11 +127,9 @@ public class BitmapTool {
 
 	/**
 	 * 将图片变成圆角（方法一）
-	 * 
-	 * @param bitmap
-	 *            Bitmap
-	 * @param pixels
-	 *            圆角的弧度
+	 *
+	 * @param bitmap Bitmap
+	 * @param pixels 圆角的弧度
 	 * @return 圆角图片
 	 */
 	public static Bitmap drawRoundBitmap(Bitmap bitmap, float pixels) {
@@ -159,11 +151,9 @@ public class BitmapTool {
 
 	/**
 	 * 将图片变成圆角（方法二）
-	 * 
-	 * @param bitmap
-	 *            Bitmap
-	 * @param pixels
-	 *            圆角的弧度
+	 *
+	 * @param bitmap Bitmap
+	 * @param pixels 圆角的弧度
 	 * @return 圆角图片
 	 */
 	public static Bitmap drawRoundCorner(Bitmap bitmap, float pixels) {
@@ -188,7 +178,7 @@ public class BitmapTool {
 
 	/**
 	 * 防止内存溢出
-	 * 
+	 *
 	 * @param sdpath
 	 * @return
 	 */
@@ -216,8 +206,8 @@ public class BitmapTool {
 			return map;
 		}
 	}
-	
-	
+
+
 	public static Bitmap showBitmapSdPath(String sdpath) {
 		Bitmap map = null;
 		try {
@@ -229,11 +219,12 @@ public class BitmapTool {
 		} finally {
 			return map;
 		}
-		
+
 	}
 
 	/**
 	 * 压缩图片至 800*480
+	 *
 	 * @param srcPath
 	 * @return
 	 */
@@ -262,7 +253,8 @@ public class BitmapTool {
 	}
 
 	/**
-	 *  将图片文件压缩到屏幕大小
+	 * 将图片文件压缩到屏幕大小
+	 *
 	 * @param context
 	 * @param resId
 	 * @return
@@ -298,7 +290,7 @@ public class BitmapTool {
 
 	/**
 	 * 将图片文件压缩到指定大小
-	 * 
+	 *
 	 * @param size 像素大小 入 700(px)
 	 * @param path 图片地址
 	 * @return
@@ -333,7 +325,7 @@ public class BitmapTool {
 		// 开始读入图片，此时把options.inJustDecodeBounds 设回true了
 		newOpts.inPreferredConfig = Config.ARGB_8888;
 		newOpts.inJustDecodeBounds = true;
-		BitmapFactory.decodeByteArray(bytes,0,bytes.length, newOpts);
+		BitmapFactory.decodeByteArray(bytes, 0, bytes.length, newOpts);
 
 		// 缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
 		final int height = newOpts.outHeight;
@@ -350,14 +342,14 @@ public class BitmapTool {
 
 		// 重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
 		newOpts.inJustDecodeBounds = false;
-		return BitmapFactory.decodeByteArray(bytes,0,bytes.length, newOpts);
+		return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, newOpts);
 	}
+
 	/**
 	 * 旋转缩放
-	 * 
+	 *
 	 * @param angle
-	 * @param size
-	 *            目标尺寸
+	 * @param size   目标尺寸
 	 * @param bitmap
 	 * @return
 	 */
@@ -369,34 +361,26 @@ public class BitmapTool {
 
 		int ww = bitmap.getWidth();
 		int hh = bitmap.getHeight();
-		int w = ww;
-		int h = hh;
 		if (ww > size || hh > size) {
 			if (ww > hh) {
-				int scale = ww / size;
-				w = size;
-				h = hh / scale;
+				float scale = size * 1f / ww * 1f;
 				matrix.postScale(scale, scale);
 			} else {
-				int scale = hh / size;
-				h = size;
-				w = ww / scale;
+				float scale = size * 1f / hh * 1f;
 				matrix.postScale(scale, scale);
 			}
 		}
 		// 创建新的图片
-		Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, w, h, matrix, true);
+		Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, ww, hh, matrix, true);
 
 		return resizedBitmap;
 	}
-	
+
 	/**
 	 * 旋转图片
-	 * 
+	 *
 	 * @param angle
-	 * 
 	 * @param bitmap
-	 * 
 	 * @return Bitmap
 	 */
 	public static Bitmap rotateBitmap(int angle, Bitmap bitmap) {
@@ -407,9 +391,10 @@ public class BitmapTool {
 		Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 		return resizedBitmap;
 	}
-	
+
 	/**
 	 * 将bitmap存入文件，这里会限制文件大小为100K
+	 *
 	 * @param bitmap
 	 * @param sd_path
 	 */
@@ -433,7 +418,7 @@ public class BitmapTool {
 				bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outStream);
 				quality -= 10;
 				// 压缩quality%，把压缩后的数据存放到baos中
-				if(quality<0){
+				if (quality < 0) {
 					quality = 0;
 					break;
 				}
@@ -448,30 +433,31 @@ public class BitmapTool {
 		}
 		return ".jpg";
 	}
-	
+
 	public static int readPictureDegree(String path) {
-        int degree = 0;
-        try {
-            ExifInterface exifInterface = new ExifInterface(path);
-            int orientation = exifInterface.getAttributeInt(
-                    ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_NORMAL);
-            switch(orientation) {
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    degree = 90;
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    degree = 180;
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    degree = 270;
-                    break;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return degree;
-    }
+		int degree = 0;
+		try {
+			ExifInterface exifInterface = new ExifInterface(path);
+			int orientation = exifInterface.getAttributeInt(
+					ExifInterface.TAG_ORIENTATION,
+					ExifInterface.ORIENTATION_NORMAL);
+			switch (orientation) {
+				case ExifInterface.ORIENTATION_ROTATE_90:
+					degree = 90;
+					break;
+				case ExifInterface.ORIENTATION_ROTATE_180:
+					degree = 180;
+					break;
+				case ExifInterface.ORIENTATION_ROTATE_270:
+					degree = 270;
+					break;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return degree;
+	}
+
 	//将bitmmap转化为字节
 	public static byte[] compressBitmap(int maxNumOfPixels, String imgpath) {
 		double maxSize = 100.00;
@@ -493,6 +479,7 @@ public class BitmapTool {
 			return null;
 		}
 	}
+
 	public static byte[] convertBitmap(Bitmap bitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		bitmap.compress(CompressFormat.JPEG, 100, baos);
@@ -542,16 +529,16 @@ public class BitmapTool {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		
+
 		}
 		return bitmap;
 	}
-	
+
 	public static int computeSampleSize(BitmapFactory.Options options,
 
-			int minSideLength, int maxNumOfPixels) {
+	                                    int minSideLength, int maxNumOfPixels) {
 
-		int initialSize = computeInitialSampleSize(options, minSideLength , maxNumOfPixels);
+		int initialSize = computeInitialSampleSize(options, minSideLength, maxNumOfPixels);
 		int roundedSize;
 
 		if (initialSize <= 8) {
@@ -565,9 +552,10 @@ public class BitmapTool {
 
 		return roundedSize;
 	}
+
 	private static int computeInitialSampleSize(BitmapFactory.Options options,
 
-			int minSideLength, int maxNumOfPixels) {
+	                                            int minSideLength, int maxNumOfPixels) {
 
 		double w = options.outWidth;
 
@@ -575,13 +563,13 @@ public class BitmapTool {
 
 		int lowerBound = (maxNumOfPixels == -1) ? 1 :
 
-		(int) Math.ceil(Math.sqrt(w * h / maxNumOfPixels));
+				(int) Math.ceil(Math.sqrt(w * h / maxNumOfPixels));
 
 		int upperBound = (minSideLength == -1) ? 128 :
 
-		(int) Math.min(Math.floor(w / minSideLength),
+				(int) Math.min(Math.floor(w / minSideLength),
 
-		Math.floor(h / minSideLength));
+						Math.floor(h / minSideLength));
 
 		if (upperBound < lowerBound) {
 
@@ -597,32 +585,32 @@ public class BitmapTool {
 			return upperBound;
 		}
 	}
-	 /** 
-     * 保存文件 
-     * 
-     */  
-    public static String saveFile(Bitmap bm, String fileName) throws IOException { 
-	        String path = getSDPath() +"/revoeye/";  
-	        File dirFile = new File(path);  
-	        if(!dirFile.exists()){   
-	            dirFile.mkdir();  
-	        }  
-	        File myCaptureFile = new File(path + fileName);  
-	        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));  
-	        bm.compress(CompressFormat.JPEG, 100, bos);
-	        bos.flush();  
-	        bos.close(); 
-	        return myCaptureFile.getPath();
-    } 
-    public static String getSDPath(){
-		  File sdDir = null;
-		  boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED); //判断sd卡是否存在
-		  if (sdCardExist)
-		  {
-		   sdDir = Environment.getExternalStorageDirectory();//获取跟目录
-		  }
-		  return sdDir.toString();   
-	 }
-	
-	
+
+	/**
+	 * 保存文件
+	 */
+	public static String saveFile(Bitmap bm, String fileName) throws IOException {
+		String path = getSDPath() + "/revoeye/";
+		File dirFile = new File(path);
+		if (!dirFile.exists()) {
+			dirFile.mkdir();
+		}
+		File myCaptureFile = new File(path + fileName);
+		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+		bm.compress(CompressFormat.JPEG, 100, bos);
+		bos.flush();
+		bos.close();
+		return myCaptureFile.getPath();
+	}
+
+	public static String getSDPath() {
+		File sdDir = null;
+		boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED); //判断sd卡是否存在
+		if (sdCardExist) {
+			sdDir = Environment.getExternalStorageDirectory();//获取跟目录
+		}
+		return sdDir.toString();
+	}
+
+
 }
