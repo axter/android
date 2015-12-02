@@ -1,12 +1,5 @@
 package com.axter.libs.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.lang.ref.SoftReference;
-import java.util.Hashtable;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,13 +9,23 @@ import android.os.StrictMode;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.axter.libs.utils.base.L;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.lang.ref.SoftReference;
+import java.util.Collection;
+import java.util.Hashtable;
 
 public class BitmapCache {
 	
@@ -50,7 +53,6 @@ public class BitmapCache {
 		cachePath = path;
 		ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
 		config.threadPriority(Thread.NORM_PRIORITY - 2);
-		config.denyCacheImageMultipleSizesInMemory();
 		config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
 		config.tasksProcessingOrder(QueueProcessingType.LIFO);
 		config.diskCache(new UnlimitedDiskCache(new File(path)));//自定义缓存路径
@@ -67,12 +69,14 @@ public class BitmapCache {
 		if (d == null || d.get() == null) {
 			if (cacheOnDisk.equals(key)) {
 				DisplayImageOptions options = new DisplayImageOptions.Builder()
-						.cacheOnDisk(true).build();
+						.cacheOnDisk(true)
+						.cacheInMemory(true)
+						.build();
 				dfs.put(key, new SoftReference<DisplayImageOptions>(options));
 				return options;
 			} else if(cacheOnMem.equals(key)){
 				DisplayImageOptions options = new DisplayImageOptions.Builder()
-						.cacheInMemory(false).build();
+						.cacheInMemory(true).build();
 				dfs.put(key, new SoftReference<DisplayImageOptions>(options));
 				return options;
 			} else{
@@ -81,19 +85,33 @@ public class BitmapCache {
 		}
 		return d.get();
 	}
+
+	/**
+	 * 缓存图片,预览图
+	 * @param key
+	 * @return
+	 */
 	private static DisplayImageOptions getDisplayImageOptions(int key) {
 		SoftReference<DisplayImageOptions> d = dfs.get(""+key);
 		if (d == null || d.get() == null) {
 	        DisplayImageOptions options = new DisplayImageOptions.Builder()
 	        		.showImageOnLoading(key)
 	        		.showImageForEmptyUri(key)
-					.cacheOnDisk(true).build();
+			        .cacheOnDisk(true)
+			        .cacheInMemory(true)
+			        .build();
 			dfs.put(""+key, new SoftReference<DisplayImageOptions>(options));
 			return options;
 		}
 		return d.get();
 	}
-	
+
+	/**
+	 * 缓存图片,预览图,圆角
+	 * @param key
+	 * @param radius
+	 * @return
+	 */
 	private static DisplayImageOptions getDisplayImageOptions(int key,int radius) {
 		SoftReference<DisplayImageOptions> d = dfs.get(key+"|"+radius);
 		if (d == null || d.get() == null) {
@@ -101,7 +119,9 @@ public class BitmapCache {
 	        		.showImageOnLoading(key)
 	        		.showImageForEmptyUri(key)
 	        		.displayer(new RoundedBitmapDisplayer(radius))
-					.cacheOnDisk(true).build();
+					.cacheOnDisk(true)
+			        .cacheInMemory(true)
+			        .build();
 			dfs.put(key+"|"+radius, new SoftReference<DisplayImageOptions>(options));
 			return options;
 		}
@@ -176,7 +196,14 @@ public class BitmapCache {
 		imageview.setImageBitmap(bitmap);
 	}
 	public static void displayLocale(String path,ImageView imageview){
-		ImageLoader.getInstance().displayImage(FILE+path, imageview, getDisplayImageOptions(cacheOnMem));
+		if(path == null){
+			return;
+		}
+		if(path.contains("file://")){
+			ImageLoader.getInstance().displayImage(path, imageview, getDisplayImageOptions(cacheOnMem));
+		}else{
+			ImageLoader.getInstance().displayImage(FILE+path, imageview, getDisplayImageOptions(cacheOnMem));
+		}
 	}
 	//=======================================================
 	//	本地图
@@ -193,18 +220,24 @@ public class BitmapCache {
 	//==================================================================
 	/**
 	 * 将本地文件拷贝至缓存区显示
-	 * @param img_src
-	 * @param img_path
+	 * @param img_src 源文件
+	 * @param img_path 网络文件
 	 * @param imageview
 	 */
 	public static void displayCache(String img_src,String img_path,ImageView imageview){
-		String filename = new HashCodeFileNameGenerator().generate(img_src);
-		copyFile(img_path, cachePath+File.separator+filename);
-		display(img_src, imageview);
+		String filename = new HashCodeFileNameGenerator().generate(img_path);
+		copyFile(img_src, cachePath+File.separator+filename);
+		display(img_path, imageview);
 	}
+
+	/**
+	 * 缓存本地文件为网络文件
+	 * @param img_src 源文件
+	 * @param img_path 网络文件
+	 */
 	public static void displayCache(String img_src,String img_path){
-		String filename = new HashCodeFileNameGenerator().generate(img_src);
-		copyFile(img_path, cachePath+File.separator+filename);
+		String filename = new HashCodeFileNameGenerator().generate(img_path);
+		copyFile(img_src, cachePath + File.separator + filename);
 	}
 	//==================================================================
 	/**
@@ -230,5 +263,17 @@ public class BitmapCache {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void show() {
+		LruMemoryCache cache = (LruMemoryCache) ImageLoader.getInstance().getMemoryCache();
+		Collection<String> list = cache.keys();
+		int count = 0;
+		for (String str:list){
+			L.i(str);
+			Bitmap bitmap = ImageLoader.getInstance().getMemoryCache().get(str);
+			count += bitmap.getRowBytes() * bitmap.getHeight();
+		}
+		L.i("count = " +cache.keys().size() +"|"+count+"|"+ cache.toString());
 	}
 }
