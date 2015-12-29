@@ -14,4 +14,40 @@
         <attr name="textPaddingBottom" format="dimension" />
     </declare-styleable>
 
+    
+        <!--  -->
+    <declare-styleable name="BXView">
+        <attr name="b_paddingLeft" format="dimension" /><!-- 左边间距 -->
+        <attr name="b_paddingRight" format="dimension" /><!-- 右边间距 -->
+        <attr name="b_paddingBottom" format="dimension" /><!-- 底部距离 -->
+        
+        <attr name="b_blColor" format="color" /><!-- 折线颜色 -->
+        <attr name="b_inColor" format="color" /><!-- 内圆颜色 -->
+        <attr name="b_ouColor" format="color" /><!-- 外圆颜色 -->
+        
+        <attr name="b_inSize" format="dimension" /><!-- 内圆半径 -->
+        <attr name="b_ouSize" format="dimension" /><!-- 外圆半径 -->
+        
+        <attr name="b_weekTextColor" format="color" /><!-- 底部字颜色 -->
+        <attr name="b_weekTextSize" format="dimension" /><!-- 底部字大小 -->
+        <attr name="b_weekBottom" format="dimension" /><!-- 底部距离 -->
+        <attr name="b_weekPadding" format="dimension" /><!-- 底部间距 -->
+    </declare-styleable>
+    <!--  -->
+    <declare-styleable name="ZXView">
+        <attr name="paddingLeft" format="dimension" />
+        <attr name="paddingRight" format="dimension" />
+        <attr name="paddingBottom" format="dimension" />
+        
+        <attr name="blColor" format="color" />
+        <attr name="inColor" format="color" />
+        <attr name="ouColor" format="color" />
+        
+        <attr name="inSize" format="dimension" />
+        <attr name="ouSize" format="dimension" />
+        
+        <attr name="weekTextColor" format="color" />
+        <attr name="weekTextSize" format="dimension" />
+        <attr name="weekBottom" format="dimension" />
+    </declare-styleable>
 </resources>

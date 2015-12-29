@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical" >
+    
+	<com.axter.example.bx.BXView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/zXView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:b_blColor="#FFE71C"
+            app:b_inColor="#FFFFFF"
+            app:b_inSize="6dp"
+            app:b_ouColor="#44FFFFFF"
+            app:b_ouSize="12dp"
+            app:b_paddingBottom="25dp"
+            app:b_paddingLeft="10dp"
+            app:b_paddingRight="10dp"
+            app:b_weekBottom="0dp"
+            app:b_weekPadding="10dp"
+            app:b_weekTextColor="@color/white"
+            app:b_weekTextSize="12sp" />
+</LinearLayout>

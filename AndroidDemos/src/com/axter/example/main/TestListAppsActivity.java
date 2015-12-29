@@ -1,6 +1,7 @@
 package com.axter.example.main;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.app.ListActivity;
@@ -15,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.axter.example.pid.PackageComparable;
 
 public class TestListAppsActivity extends ListActivity {
 
@@ -41,6 +44,7 @@ public class TestListAppsActivity extends ListActivity {
 				apps.add(pak);
 			}
 		}
+		Collections.sort(apps,new PackageComparable());
 		for(PackageInfo app:apps){
 			PackageItem item = new PackageItem();
 			item.text = app.packageName;

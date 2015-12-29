@@ -7,11 +7,11 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="21" />
-    
-<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" /> 
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
-<uses-permission android:name="android.permission.CAMERA" /> 
-<uses-permission android:name="android.permission.RECORD_AUDIO" /> 
+
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -27,120 +27,147 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity android:name="com.axter.example.main.TestBackgroundActivity"
-                android:label="背景图Bug">
+        <activity
+            android:name="com.axter.example.main.TestBackgroundActivity"
+            android:label="背景图Bug" >
             <intent-filter>
                 <action android:name="android.axter.example.action.MAIN" />
+
                 <category android:name="android.axter.example.category.SAMPLE_CODE" />
             </intent-filter>
         </activity>
-        
-        <activity android:name="com.axter.example.main.TestListAppsActivity"
-                android:label="罗列应用程序">
+        <activity
+            android:name="com.axter.example.main.TestListAppsActivity"
+            android:label="罗列应用程序" >
             <intent-filter>
                 <action android:name="android.axter.example.action.MAIN" />
+
                 <category android:name="android.axter.example.category.SAMPLE_CODE" />
             </intent-filter>
         </activity>
-        
-        <activity android:name="com.axter.example.main.TestReplaceStringActivity"
-                android:label="替换字符串效率">
+        <activity
+            android:name="com.axter.example.main.TestReplaceStringActivity"
+            android:label="替换字符串效率" >
             <intent-filter>
                 <action android:name="android.axter.example.action.MAIN" />
+
                 <category android:name="android.axter.example.category.SAMPLE_CODE" />
             </intent-filter>
         </activity>
-        
-        
-        <activity android:name="com.axter.example.multipletextview.TestMultipleTextView1"
-                android:label="多文本显示效率1">
+        <activity
+            android:name="com.axter.example.multipletextview.TestMultipleTextView1"
+            android:label="多文本显示效率1" >
             <intent-filter>
                 <action android:name="android.axter.example.action.MAIN" />
+
                 <category android:name="android.axter.example.category.SAMPLE_CODE" />
             </intent-filter>
         </activity>
-        
-        
-        <activity android:name="com.axter.example.multipletextview.TestMultipleTextView2"
-                android:label="多文本显示效率2">
+        <activity
+            android:name="com.axter.example.multipletextview.TestMultipleTextView2"
+            android:label="多文本显示效率2" >
             <intent-filter>
                 <action android:name="android.axter.example.action.MAIN" />
+
                 <category android:name="android.axter.example.category.SAMPLE_CODE" />
             </intent-filter>
         </activity>
-        
-        <activity android:name="com.axter.example.viewpage.ViewPageActivity"
-                android:label="ViewPage菜单栏">
+        <activity
+            android:name="com.axter.example.viewpage.ViewPageActivity"
+            android:label="ViewPage菜单栏" >
             <intent-filter>
                 <action android:name="android.axter.example.action.MAIN" />
+
                 <category android:name="android.axter.example.category.SAMPLE_CODE" />
             </intent-filter>
         </activity>
-        
-        <activity android:name="com.axter.example.viewpage2.ViewPageActivity"
-                android:label="动态ViewPage菜单栏">
+        <activity
+            android:name="com.axter.example.viewpage2.ViewPageActivity"
+            android:label="动态ViewPage菜单栏" >
             <intent-filter>
                 <action android:name="android.axter.example.action.MAIN" />
+
                 <category android:name="android.axter.example.category.SAMPLE_CODE" />
             </intent-filter>
         </activity>
-        
-        
-        <activity android:name="com.axter.example.main.TestXMLError"
-                android:label="自定义字体引发xml预览错误，解决">
+        <activity
+            android:name="com.axter.example.main.TestXMLError"
+            android:label="自定义字体引发xml预览错误，解决" >
             <intent-filter>
                 <action android:name="android.axter.example.action.MAIN" />
+
                 <category android:name="android.axter.example.category.SAMPLE_CODE" />
             </intent-filter>
         </activity>
-        
-        
-        <activity android:name="com.axter.example.alert.TestCustomDialogActivity"
-                android:label="自定义Alert">
+        <activity
+            android:name="com.axter.example.alert.TestCustomDialogActivity"
+            android:label="自定义Alert" >
             <intent-filter>
                 <action android:name="android.axter.example.action.MAIN" />
+
                 <category android:name="android.axter.example.category.SAMPLE_CODE" />
             </intent-filter>
         </activity>
-        
-        
-        <activity android:name="com.axter.example.customlistview.MainActivity"
-                android:label="自定义下拉list">
+        <activity
+            android:name="com.axter.example.customlistview.MainActivity"
+            android:label="自定义下拉list" >
             <intent-filter>
                 <action android:name="android.axter.example.action.MAIN" />
+
                 <category android:name="android.axter.example.category.SAMPLE_CODE" />
             </intent-filter>
         </activity>
-        
-        <activity android:name="com.axter.example.tools.DoPic"
-                android:label="操作图片">
+        <activity
+            android:name="com.axter.example.tools.DoPic"
+            android:label="操作图片" >
             <intent-filter>
                 <action android:name="android.axter.example.action.MAIN" />
+
                 <category android:name="android.axter.example.category.SAMPLE_CODE" />
             </intent-filter>
         </activity>
-        
-        <activity android:name="com.axter.example.tools.ImageScaleActivity"
-                android:label="裁剪图片">
+        <activity
+            android:name="com.axter.example.tools.ImageScaleActivity"
+            android:label="裁剪图片" >
             <intent-filter>
                 <action android:name="android.axter.example.action.MAIN" />
+
                 <category android:name="android.axter.example.category.SAMPLE_CODE" />
             </intent-filter>
         </activity>
-        
-        <activity android:name="com.axter.example.testpopub.ShowPopubActivity"
-                android:label="测试弹出框">
+        <activity
+            android:name="com.axter.example.testpopub.ShowPopubActivity"
+            android:label="测试弹出框" >
             <intent-filter>
                 <action android:name="android.axter.example.action.MAIN" />
+
                 <category android:name="android.axter.example.category.SAMPLE_CODE" />
             </intent-filter>
         </activity>
-        
-        <activity android:name="com.axter.example.db.TestGreenDaoActivity"
-                android:label="测试DBDAO">
+        <activity
+            android:name="com.axter.example.db.TestGreenDaoActivity"
+            android:label="测试DBDAO" >
             <intent-filter>
                 <action android:name="android.axter.example.action.MAIN" />
+
+                <category android:name="android.axter.example.category.SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.axter.example.main.TestListPIDActivity"
+            android:label="罗列PID程序" >
+            <intent-filter>
+                <action android:name="android.axter.example.action.MAIN" />
+
+                <category android:name="android.axter.example.category.SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.axter.example.main.ChangeTheme"
+            android:label="换黑主题" >
+            <intent-filter>
+                <action android:name="android.axter.example.action.MAIN" />
+
                 <category android:name="android.axter.example.category.SAMPLE_CODE" />
             </intent-filter>
         </activity>
