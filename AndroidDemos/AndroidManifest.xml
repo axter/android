@@ -171,6 +171,16 @@
                 <category android:name="android.axter.example.category.SAMPLE_CODE" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.axter.example.main.InfoActivity"
+            android:label="系统信息" >
+            <intent-filter>
+                <action android:name="android.axter.example.action.MAIN" />
+
+                <category android:name="android.axter.example.category.SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
+        
     </application>
 
 </manifest>
