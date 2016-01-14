@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.axter.example.R;
 import com.axter.libs.utils.base.DensityUtils;
 import com.axter.libs.utils.base.ScreenUtils;
 
-import android.R;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.SimpleAdapter;
@@ -19,7 +19,7 @@ public class InfoActivity extends ListActivity {
     super.onCreate(savedInstanceState);
 
     setListAdapter(new SimpleAdapter(this, getData(), android.R.layout.simple_list_item_1,
-        new String[] {"name"}, new int[] {R.id.text1}));
+        new String[] {"name"}, new int[] {android.R.id.text1}));
 
     getListView().setTextFilterEnabled(true);
   }
@@ -32,8 +32,10 @@ public class InfoActivity extends ListActivity {
     list.add(getValue("[状态栏高度] " + ScreenUtils.getStatusHeight(this)));
     list.add(getValue("[density] " + getResources().getDisplayMetrics().density));
     list.add(getValue("[densityDpi] " + getResources().getDisplayMetrics().densityDpi));
+    list.add(getValue("[scaledDensity] " + getResources().getDisplayMetrics().scaledDensity));
     list.add(getValue("[xdpi] " + getResources().getDisplayMetrics().xdpi));
     list.add(getValue("[ydpi] " + getResources().getDisplayMetrics().ydpi));
+    list.add(getValue("[xxhdpi] " + getResources().getString(R.string.setting)));
     return list;
   }
 
