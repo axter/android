@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
+	<uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -181,6 +181,45 @@
             </intent-filter>
         </activity>
         
+        <activity
+            android:name="com.axter.example.webview.SecondActivity"
+            android:label="WebView上传" >
+            <intent-filter>
+                <action android:name="android.axter.example.action.MAIN" />
+
+                <category android:name="android.axter.example.category.SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="com.axter.example.webview.SecondActivity2"
+            android:label="WebView上传2" >
+            <intent-filter>
+                <action android:name="android.axter.example.action.MAIN" />
+
+                <category android:name="android.axter.example.category.SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="com.axter.example.webview.SecondActivity3"
+            android:label="WebView上传3" >
+            <intent-filter>
+                <action android:name="android.axter.example.action.MAIN" />
+
+                <category android:name="android.axter.example.category.SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="com.axter.example.webview.MyWebViewActivity"
+            android:label="WebView上传MyWebViewActivity" >
+            <intent-filter>
+                <action android:name="android.axter.example.action.MAIN" />
+
+                <category android:name="android.axter.example.category.SAMPLE_CODE" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
