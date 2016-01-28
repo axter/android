@@ -1,0 +1,70 @@
+环境变量一键设置
+adb 安装 apk
+adb 查看 文件
+adb 查看 日志
+反编译apk
+反编译jar
+查看manifast文件信息,,查看其他应用信息
+查看apk方法数目
+一键签名
+可以自动加固码??
+渠道包+分解
+hprof 分析文件
+查看签名信息
+
+可以增加插件运行,引用jar运行,一定很棒
+桌面工具
+gradle打包运行,自动增加版本号
+
+
+commons-codec
+Commons项目中用来处理常用的编码方法的工具类包，例如DES、SHA1、MD5、Base64，URL，Soundx等等
+
+
+StarWars.Android	一个星战换肤
+Side-Menu.Android	漂亮的侧边栏
+出自于Yalantis
+
+android-unused-resources	检测未使用的Android资源
+源于GooGle,改写了路径适用于studio工程
+
+BaseAnimation-master	集合了很多界面动画效果
+
+FreeCsdn	简易的csdn几个有名的博客
+
+ObjectAnimator 自定义动画
+
+CameraPOI	照相+定位,很好的呈现前方情况
+
+
+androidWheelView
+Android-PickerView	算不错的选择器了
+
+oschina-android-app	开源中国的Android程序
+
+MVCHelper	git一个加载更多的框架
+
+Knife	一个富文本组件
+https://github.com/mthli/Knife
+
+MusikPlayer	一个java音乐播放器,还具有修改音乐文件属性的功能
+
+
+dexposed	阿里巴巴的杰作,热补丁技术
+
+
+android-Ultra-Pull-To-Refresh	优秀的下拉刷新
+cube-sdk	快捷开发工具集
+android-UCToast	复制悬浮窗实现
+出自于liaohuqiu
+
+ImageProcesTools	图片裁剪等工具集合,圆形头像之类的
+
+SwipeBackLayout		右滑退出
+
+UltimateRecyclerView	RecyclerView使用集合
+
+
+okhttp	网络访问
+
+facebook的图片浏览程序
