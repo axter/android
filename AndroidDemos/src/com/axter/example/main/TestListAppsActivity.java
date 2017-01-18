@@ -1,20 +1,26 @@
 package com.axter.example.main;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.axter.example.pid.PackageComparable;
@@ -28,6 +34,43 @@ public class TestListAppsActivity extends ListActivity {
 		setListAdapter(new EfficientAdapter(this, getData()));
 
 		getListView().setTextFilterEnabled(true);
+	}
+
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		PackageItem item = (PackageItem) getListAdapter().getItem(position);
+		Signature[] signs = getRawSignature(this, item.text);
+		StringBuilder sb = new StringBuilder();
+		for (Signature sign : signs) {
+			sb.append(getMessageDigest(sign.toByteArray()));
+			sb.append("\n");
+		}
+		System.out.println(sb.toString());
+		new AlertDialog.Builder(this).setTitle("签名").setMessage(sb.toString())
+				.setNegativeButton("确定", new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				}).create().show();
+	}
+
+	private Signature[] getRawSignature(Context paramContext, String paramString) {
+		if ((paramString == null) || (paramString.length() == 0)) {
+			return null;
+		}
+		PackageManager localPackageManager = paramContext.getPackageManager();
+		PackageInfo localPackageInfo;
+		try {
+			localPackageInfo = localPackageManager.getPackageInfo(paramString,
+					64);
+			if (localPackageInfo == null) {
+				return null;
+			}
+		} catch (PackageManager.NameNotFoundException localNameNotFoundException) {
+			return null;
+		}
+		return localPackageInfo.signatures;
 	}
 
 	public List<PackageItem> getData() {
@@ -87,7 +130,7 @@ public class TestListAppsActivity extends ListActivity {
          * @see android.widget.ListAdapter#getItem(int)
          */
         public Object getItem(int position) {
-            return position;
+            return mPaklist.get(position);
         }
 
         /**
@@ -140,4 +183,41 @@ public class TestListAppsActivity extends ListActivity {
             TextView text;
         }
     }
+	public static final String getMessageDigest(byte[] paramArrayOfByte) {
+		char[] arrayOfChar1 = { 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 97, 98,
+				99, 100, 101, 102 };
+		try {
+			MessageDigest localMessageDigest = MessageDigest.getInstance("MD5");
+			localMessageDigest.update(paramArrayOfByte);
+			byte[] arrayOfByte = localMessageDigest.digest();
+			int i = arrayOfByte.length;
+			char[] arrayOfChar2 = new char[i * 2];
+			int j = 0;
+			int k = 0;
+			for (;;) {
+				if (j >= i) {
+					return new String(arrayOfChar2);
+				}
+				int m = arrayOfByte[j];
+				int n = k + 1;
+				arrayOfChar2[k] = arrayOfChar1[(0xF & m >>> 4)];
+				k = n + 1;
+				arrayOfChar2[n] = arrayOfChar1[(m & 0xF)];
+				j++;
+			}
+		} catch (Exception localException) {
+		}
+		return null;
+	}
+
+	public static final byte[] getRawDigest(byte[] paramArrayOfByte) {
+		try {
+			MessageDigest localMessageDigest = MessageDigest.getInstance("MD5");
+			localMessageDigest.update(paramArrayOfByte);
+			byte[] arrayOfByte = localMessageDigest.digest();
+			return arrayOfByte;
+		} catch (Exception localException) {
+		}
+		return null;
+	}
 }
