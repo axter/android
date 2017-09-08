@@ -25,37 +25,37 @@ import java.util.List;
 public class CopyAndroidWorkSpace {
 	// 排除文件列表
 	static List<String> exclude_list;
-	static String exclude_file;
+	static String exclude_file = "D:/adb/exclude.txt";
 	// 源文件夹
-	static String url1 = "E:/Git/android";
+	static String url1 = "E:/WorkSpace_Test/axter/BaseLibs";
 	// 目标文件夹
-	static String url2 = "E:/WorkSpace/libs";
+	static String url2 = "E:/WorkSpace_Test/axter/BaseLibs1";
 	// 还原对比目录
-	static String url3 = "E:/WorkSpace/libs2";
+	static String url3 = "E:/WorkSpace_Test/axter/BaseLibs2";
 	
-	static String source = "";
-	static String dest = "";
+	static String source = "com.axter.libs";
+	static String dest = "com.imohoo.libs";
 	public static void main(String[] args) throws IOException {
-		if(args==null || args.length<5){
-			System.out.println("缺少参数");
-			return;
-		}
-		System.out.println(args[0]+"|"+args[1]+"|"+args[2]+"|"+args[3]+"|"+args[4]);
-		url1 = args[2];
-		url2 = args[3];
-		url3 = args[4];
-		if(args.length >= 6){
-			exclude_file = args[5];
-			System.out.println(args[5]);
-		}
-		source = args[0];
-		dest = args[1];
+//		if(args==null || args.length<5){
+//			System.out.println("缺少参数");
+//			return;
+//		}
+//		System.out.println(args[0]+"|"+args[1]+"|"+args[2]+"|"+args[3]+"|"+args[4]);
+//		url1 = args[2];
+//		url2 = args[3];
+//		url3 = args[4];
+//		if(args.length >= 6){
+//			exclude_file = args[5];
+//			System.out.println(args[5]);
+//		}
+//		source = args[0];
+//		dest = args[1];
 		copyModify(url1, url2);
 		
 		String temp= source;
 		source = dest;
 		dest = temp;
-		
+//		
 		copyModify(url2, url3);
 	}
 
@@ -69,17 +69,10 @@ public class CopyAndroidWorkSpace {
 		if (souDir.exists() && souDir.isDirectory()) {
 			if (!dstDir.exists()) {
 				dstDir.mkdirs();
+			} else{
+				deleteFile(dstDir);
 			}
-			File[] files = souDir.listFiles();
-			for (File file : files) {
-				if (file.isDirectory()) {
-					// 拷贝文件夹
-					copy(file.getAbsolutePath(), url2);
-				}else{
-					File dst = new File(url2, file.getName());
-					copyFile(file, dst);
-				}
-			}
+			copyFile(souDir, dstDir);
 		} else {
 			System.out.println("资源文件夹未找到");
 		}
@@ -106,12 +99,16 @@ public class CopyAndroidWorkSpace {
 				for (File f : files) {
 					deleteFile(f);
 				}
+				file.delete();
 			}
 		}
 	}
 
 	public static void copyFile(File file1, File file2) throws IOException {
 		if (file1.isFile()) {
+			if(!file2.getParentFile().exists()){
+				file2.getParentFile().mkdirs();
+			}
 			String name = file1.getName();
 			String last = name.substring(name.lastIndexOf(".") + 1);
 			// "jar".equals(last) || "png".equals(last) || "class".equals(last) || "TTF".equals(last)  || "jpg".equals(last)
@@ -121,12 +118,15 @@ public class CopyAndroidWorkSpace {
 				fileChannelCopy(file1, file2);
 			}
 		} else if (file1.isDirectory()) {
-			if (isHave(file1.getName()))
+			if (isHave(file1.getName())){
 				return;
-			file2.mkdirs();
+			}
+			if (file2.getAbsolutePath().contains(source.replace(".", "\\"))) {
+				file2 = new File(file2.getAbsolutePath().replace(source.replace(".", "\\"), dest.replace(".", "\\")));
+			}
 			File[] files = file1.listFiles();
 			for (File f : files) {
-				if (file2.isDirectory() && f.getName().equals(source)) {
+				if (f.getName().equals(source)) {
 					copyFile(f, new File(file2, dest));
 				} else {
 					copyFile(f, new File(file2, f.getName()));
